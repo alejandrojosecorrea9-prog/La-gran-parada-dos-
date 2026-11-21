@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>La Gran Parada</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  /* Idea: negro, amarillo y blanco como la referencia. Barra negra, portada con foto grande, categorías en fila, menú sobre fondo blanco, promo y pie negros */
+  --black: #0c0c0c;
+  --black-2: #1a1a1a;
+  --yellow: #ffd400;
+  --white: #ffffff;
+  --paper: #f6f6f4;
+  --ink: #141414;
+  --muted: #6b6b6b;
+  --line: #e6e6e2;
+  --green: #1c7c4f;
+  --display: "Oswald", "Arial Narrow", Impact, sans-serif;
+  --body: "Poppins", system-ui, -apple-system, "Segoe UI", sans-serif;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body { background: var(--white); color: var(--ink); font-family: var(--body); font-size: 16px; line-height: 1.55; padding-bottom: 76px; }
+.wrap { max-width: 1040px; margin: 0 auto; padding: 0 18px; }
+
+/* Barra */
+.nav { background: var(--black); position: sticky; top: 0; z-index: 20; }
+.nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 58px; }
+.brand { font: 700 1.25rem var(--display); letter-spacing: .08em; text-transform: uppercase; color: var(--yellow); text-decoration: none; }
+.nav a.link { color: #fff; text-decoration: none; font: 500 .85rem var(--body); margin-left: 16px; }
+.nav .links { display: flex; align-items: center; }
+.nav a.pill { background: var(--yellow); color: var(--black); font: 600 .8rem var(--body); padding: 8px 14px; border-radius: 6px; text-decoration: none; margin-left: 16px; }
+
+/* Portada */
+.hero { position: relative; background: var(--black); color: #fff; overflow: hidden; }
+.hero .bg { position: absolute; inset: 0; background: url("img/hallaca.jpg") center/cover no-repeat; opacity: .55; }
+.hero::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(12,12,12,.96) 0%, rgba(12,12,12,.7) 55%, rgba(12,12,12,.25) 100%); }
+.hero .wrap { position: relative; z-index: 1; padding-top: 64px; padding-bottom: 72px; }
+.hero small { font: 500 .8rem var(--body); letter-spacing: .22em; text-transform: uppercase; color: var(--yellow); }
+.hero h1 { font: 700 clamp(2.6rem, 11vw, 4.8rem)/1 var(--display); text-transform: uppercase; margin: 12px 0 6px; text-wrap: balance; }
+.hero h1 span { display: block; color: var(--yellow); }
+.hero p { margin: 0 0 24px; max-width: 30ch; color: #e6e6e6; }
+.acts { display: flex; flex-wrap: nowrap; align-items: center; gap: 10px; }
+.acts .btn-y { padding: 12px 18px; white-space: nowrap; }
+.btn-pack { display: inline-flex; align-items: center; gap: 10px; background: var(--black); color: #fff; border: 2px solid var(--yellow); border-radius: 8px; padding: 4px 10px 4px 4px; cursor: pointer; text-align: left; font-family: var(--body); white-space: nowrap; animation: late 1.8s ease-in-out infinite; }
+.btn-pack .pr { background: var(--yellow); color: var(--black); font: 700 1.3rem/1 var(--display); border-radius: 5px; padding: 8px 8px; }
+.btn-pack b { display: block; font: 600 .88rem/1.1 var(--body); color: var(--yellow); }
+.btn-pack i { display: block; font: 500 .62rem/1.2 var(--body); font-style: normal; letter-spacing: .04em; text-transform: uppercase; }
+.btn-pack:focus-visible { outline: 3px solid var(--green); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) { .btn-pack { animation: none; } }
+.btn-y { display: inline-block; background: var(--yellow); color: var(--black); font: 600 .95rem var(--body); text-decoration: none; padding: 12px 26px; border-radius: 6px; }
+
+/* Categorías */
+.dark { background: var(--black); color: #fff; padding: 40px 0 44px; }
+.h2 { font: 700 2rem/1.05 var(--display); text-transform: uppercase; text-align: center; margin: 0 0 4px; }
+.h2 em { font-style: normal; color: var(--yellow); }
+.sub { text-align: center; color: #bdbdbd; margin: 0 0 22px; font-size: .92rem; }
+.cats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+@media (min-width: 700px) { .cats { grid-template-columns: repeat(4, 1fr); } }
+.cat { background: var(--black-2); border: 2px solid transparent; border-radius: 8px; padding: 8px 8px 12px; cursor: pointer; color: #fff; font: 600 1rem var(--display); letter-spacing: .06em; text-transform: uppercase; text-align: center; }
+.cat .ph { aspect-ratio: 4 / 3; border-radius: 6px; margin-bottom: 8px; background: #000 center/cover no-repeat; display: grid; place-items: center; }
+.cat .ph svg { width: 44%; }
+.cat[aria-pressed="true"] { border-color: var(--yellow); color: var(--yellow); }
+.cat:focus-visible, .btn:focus-visible, .btn-y:focus-visible, summary:focus-visible, .float:focus-visible, .nav a:focus-visible { outline: 3px solid var(--green); outline-offset: 2px; }
+
+/* Menú */
+.menu { background: var(--white); padding: 44px 0 40px; }
+.grid { display: grid; gap: 16px; grid-template-columns: 1fr; margin-top: 22px; }
+@media (min-width: 640px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 920px) { .grid { grid-template-columns: repeat(3, 1fr); } }
+.card { display: flex; flex-direction: column; background: var(--white); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+.card.feat { background: var(--yellow); border-color: var(--yellow); }
+.art { position: relative; aspect-ratio: 4 / 3; background: var(--black); display: grid; place-items: center; overflow: hidden; }
+.art img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.art svg { width: 38%; }
+.art .track { position: absolute; inset: 0; display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
+.art .track::-webkit-scrollbar { display: none; }
+.art .track img { position: static; flex: 0 0 100%; width: 100%; height: 100%; object-fit: cover; scroll-snap-align: center; }
+.dots { position: absolute; left: 0; right: 0; bottom: 10px; display: flex; justify-content: center; gap: 6px; pointer-events: none; }
+.dots i { width: 7px; height: 7px; border-radius: 50%; background: rgba(255,255,255,.55); }
+.dots i.on { background: var(--yellow); }
+.nav-btn { position: absolute; top: 50%; transform: translateY(-50%); width: 34px; height: 34px; border: 0; border-radius: 50%; background: rgba(12,12,12,.65); color: #fff; font: 600 1.4rem/1 var(--body); cursor: pointer; display: grid; place-items: center; padding: 0 0 3px; }
+.nav-btn.prev { left: 8px; } .nav-btn.next { right: 8px; }
+.soon { position: absolute; left: 0; right: 0; bottom: 12px; text-align: center; font: 500 .66rem var(--body); letter-spacing: .16em; text-transform: uppercase; color: rgba(255,255,255,.6); }
+.ref { position: absolute; right: 8px; bottom: 6px; font: 500 .6rem var(--body); letter-spacing: .08em; text-transform: uppercase; color: rgba(255,255,255,.9); text-shadow: 0 1px 3px rgba(0,0,0,.7); }
+.tags { position: absolute; left: 10px; top: 10px; display: flex; gap: 6px; flex-wrap: wrap; }
+.tag { font: 600 .66rem var(--body); letter-spacing: .06em; text-transform: uppercase; background: var(--black); color: var(--yellow); padding: 4px 9px; border-radius: 4px; }
+.body { padding: 16px 16px 18px; display: flex; flex-direction: column; gap: 8px; flex: 1; text-align: center; }
+.card h3 { font: 600 1.35rem/1.1 var(--display); text-transform: uppercase; letter-spacing: .02em; margin: 0; text-wrap: balance; }
+.price { font: 600 .85rem var(--body); color: var(--muted); }
+.card.feat .price { color: #3a3200; }
+.price { font-size: 1.05rem; color: var(--ink); }
+details { font-size: .9rem; color: var(--muted); }
+summary { cursor: pointer; font: 600 .8rem var(--body); color: var(--ink); }
+details p { margin: 6px 0 0; }
+.btn { margin-top: auto; display: block; text-decoration: none; font: 600 .9rem var(--body); text-align: center; background: var(--yellow); color: var(--black); padding: 11px 14px; border-radius: 6px; }
+.card.feat .btn { background: var(--black); color: var(--yellow); }
+
+/* Promo */
+.promo { background: var(--black) url("img/ponche.jpg") right center/cover no-repeat; position: relative; color: #fff; }
+.promo::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(12,12,12,.96) 30%, rgba(12,12,12,.35)); }
+.promo .wrap { position: relative; z-index: 1; padding-top: 48px; padding-bottom: 48px; }
+.promo .h2 { text-align: left; }
+.promo p { margin: 8px 0 18px; max-width: 32ch; color: #e0e0e0; }
+
+/* Galería */
+.gal { display: grid; grid-template-columns: repeat(2, 1fr); }
+@media (min-width: 700px) { .gal { grid-template-columns: repeat(4, 1fr); } }
+.gal div { aspect-ratio: 1; background: center/cover no-repeat; }
+
+/* Pie */
+footer { background: var(--black); color: #cfcfcf; padding: 36px 0 40px; }
+footer .cols { display: grid; gap: 22px; }
+@media (min-width: 700px) { footer .cols { grid-template-columns: 1.2fr 1fr 1fr; } }
+footer h4 { font: 600 1.05rem var(--display); letter-spacing: .08em; text-transform: uppercase; color: #fff; margin: 0 0 8px; }
+footer p { margin: 0; font-size: .92rem; }
+footer .brand { display: block; margin-bottom: 8px; }
+
+/* Paquete navideño */
+.strip { background: var(--yellow); color: var(--black); text-align: center; font: 600 .85rem var(--body); padding: 9px 12px; }
+.strip a { color: var(--black); text-decoration: underline; }
+.sheet { position: fixed; inset: 0; z-index: 60; display: flex; align-items: flex-end; justify-content: center; }
+.sheet .back { position: absolute; inset: 0; background: rgba(0,0,0,.65); }
+.sheet .panel { position: relative; width: 100%; max-width: 980px; max-height: 90vh; overflow-y: auto; background: var(--yellow); color: var(--black); border-radius: 18px 18px 0 0; padding: 36px 0 34px; animation: sube .28s ease-out; }
+@keyframes sube { from { transform: translateY(40px); opacity: 0; } to { transform: none; opacity: 1; } }
+.sheet .x { position: absolute; top: 10px; right: 12px; width: 40px; height: 40px; border: 0; border-radius: 50%; background: var(--black); color: var(--yellow); font: 600 1.4rem/1 var(--body); cursor: pointer; }
+.cupo { position: fixed; left: 12px; bottom: 14px; z-index: 30; display: flex; align-items: center; gap: 10px; border: 2px solid var(--yellow); background: var(--black); color: #fff; border-radius: 14px; padding: 8px 14px 8px 8px; cursor: pointer; text-align: left; box-shadow: 0 6px 18px rgba(0,0,0,.4); animation: late 1.8s ease-in-out infinite; }
+.cupo .p { flex: 0 0 auto; background: var(--yellow); color: var(--black); font: 700 1.35rem/1 var(--display); border-radius: 9px; padding: 8px 9px; }
+.cupo b { display: block; font: 600 .8rem/1.1 var(--display); letter-spacing: .06em; text-transform: uppercase; color: var(--yellow); }
+.cupo span { display: block; font: 500 .72rem/1.2 var(--body); }
+.cupo:focus-visible { outline: 3px solid var(--green); outline-offset: 2px; }
+@keyframes late { 0%,100% { transform: scale(1); box-shadow: 0 6px 18px rgba(0,0,0,.4), 0 0 0 0 rgba(255,212,0,.6); } 50% { transform: scale(1.04); box-shadow: 0 6px 18px rgba(0,0,0,.4), 0 0 0 10px rgba(255,212,0,0); } }
+@media (prefers-reduced-motion: reduce) { .cupo { animation: none; } .sheet .panel { animation: none; } }
+.strip button { font: inherit; background: var(--black); color: var(--yellow); border: 0; border-radius: 999px; padding: 3px 12px; margin-left: 6px; cursor: pointer; }
+.pack { background: var(--yellow); color: var(--black); }
+.pack .top { text-align: center; }
+.pack .badge { display: inline-block; background: var(--black); color: var(--yellow); font: 600 .72rem var(--body); letter-spacing: .14em; text-transform: uppercase; padding: 5px 12px; border-radius: 4px; }
+.pack h2 { font: 700 clamp(2.2rem, 9vw, 3.4rem)/1 var(--display); text-transform: uppercase; margin: 12px 0 4px; }
+.pack .precio { font: 700 clamp(3.4rem, 16vw, 5.6rem)/1 var(--display); }
+.pack .precio small { font: 600 1rem var(--body); letter-spacing: .04em; }
+.pack .nota { margin: 6px auto 0; max-width: 34ch; font-weight: 500; }
+.items { display: grid; grid-template-columns: 1fr; gap: 10px; margin: 26px 0 22px; }
+@media (min-width: 560px) { .items { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 900px) { .items { grid-template-columns: repeat(3, 1fr); } }
+.item { display: flex; align-items: center; gap: 12px; background: #fff; border-radius: 10px; padding: 8px; }
+.item .th { flex: 0 0 56px; width: 56px; height: 56px; border-radius: 8px; background: var(--black) center/cover no-repeat; display: grid; place-items: center; }
+.item .th svg { width: 62%; }
+.item b { display: block; font: 600 1.05rem/1.1 var(--display); text-transform: uppercase; letter-spacing: .02em; }
+.item span { font-size: .8rem; color: var(--muted); }
+.how { display: grid; gap: 10px; grid-template-columns: 1fr; margin: 0 0 24px; }
+@media (min-width: 700px) { .how { grid-template-columns: repeat(4, 1fr); } }
+.how div { background: var(--black); color: #fff; border-radius: 10px; padding: 12px 14px; font-size: .9rem; line-height: 1.3; }
+.how b { display: block; font: 700 1.6rem/1 var(--display); color: var(--yellow); margin-bottom: 4px; }
+.pack .cta-row { text-align: center; }
+.btn-k { display: inline-block; background: var(--black); color: var(--yellow); font: 600 1rem var(--body); text-decoration: none; padding: 14px 30px; border-radius: 6px; }
+.pack .fine { margin: 10px 0 0; font-size: .8rem; }
+.btn-k:focus-visible { outline: 3px solid var(--green); outline-offset: 2px; }
+.float { position: fixed; right: 14px; bottom: 14px; z-index: 30; text-decoration: none; font: 600 .9rem var(--body); background: var(--yellow); color: var(--black); border-radius: 999px; padding: 13px 20px; box-shadow: 0 6px 18px rgba(0,0,0,.35); }
+[hidden] { display: none !important; }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap">
+    <a class="brand" href="#inicio">La Gran Parada</a>
+    <div class="links">
+      <a class="link" href="#menu">Menú</a>
+      <a class="pill" id="navPedir" href="#" target="_blank" rel="noopener">Pedir</a>
+    </div>
+  </div>
+</nav>
+
+<div class="strip">Paquete navideño $100 · ¡Pocos cupos! <button type="button" id="verPack">Ver qué trae</button></div>
+<header class="hero" id="inicio">
+  <div class="bg" aria-hidden="true"></div>
+  <div class="wrap">
+    <small>Maracaibo · Venezuela</small>
+    <h1>Hallacas<span>venezolanas</span></h1>
+    <p>El rinconcito de los dulces. Pide por WhatsApp.</p>
+    <div class="acts">
+      <a class="btn-y" id="heroPedir" href="#" target="_blank" rel="noopener">Pedir ahora</a>
+      <button class="btn-pack" type="button" id="heroPack"><span class="pr">$100</span><span class="tx"><b>Pide tu cupo</b><i>Cupos limitados</i></span></button>
+    </div>
+  </div>
+</header>
+
+<div class="sheet" id="paquete" role="dialog" aria-modal="true" aria-label="Paquete navideño" hidden>
+  <div class="back" id="packBack"></div>
+  <div class="panel pack">
+  <button class="x" type="button" id="packX" aria-label="Cerrar">&times;</button>
+  <div class="wrap">
+    <div class="top">
+      <span class="badge">Promoción de 10 días · Cupos limitados</span>
+      <h2>Paquete navideño</h2>
+      <div class="precio">$100 <small>USD</small></div>
+      <p class="nota">Aparta tu cupo y ve abonando. Tu cena de Navidad lista el 24 en la noche.</p>
+    </div>
+    <div class="items" id="items"></div>
+    <div class="how">
+      <div><b>1</b>Escríbenos por WhatsApp</div>
+      <div><b>2</b>Aparta tu cupo con un primer abono</div>
+      <div><b>3</b>Sigue abonando hasta el 23 de diciembre</div>
+      <div><b>4</b>Recibe tu comida el 24 en la noche</div>
+    </div>
+    <div class="cta-row">
+      <a class="btn-k" id="packPedir" href="#" target="_blank" rel="noopener">Apartar mi cupo</a>
+      <p class="fine">Los cupos son limitados. Se aparta con abono.</p>
+    </div>
+  </div>
+  </div>
+</div>
+
+<section class="dark">
+  <div class="wrap">
+    <h2 class="h2">Qué <em>ofrecemos</em></h2>
+    <p class="sub">Toca una categoría para ver el menú</p>
+    <div class="cats" id="cats" role="group" aria-label="Categorías"></div>
+  </div>
+</section>
+
+<section class="menu" id="menu">
+  <div class="wrap">
+    <h2 class="h2">Elige y <em style="color:#c9a000">disfruta</em></h2>
+    <p class="sub" style="color:var(--muted)">Todo se pide por WhatsApp. Las tortas, por encargo y con anticipación.</p>
+    <div class="grid" id="grid"></div>
+  </div>
+</section>
+
+<section class="promo">
+  <div class="wrap">
+    <h2 class="h2">Tortas por <em>encargo</em></h2>
+    <p>Cumpleaños, fiestas infantiles y celebraciones. Cuéntanos tu idea.</p>
+    <a class="btn-y" id="promoPedir" href="#" target="_blank" rel="noopener">Hacer mi pedido</a>
+  </div>
+</section>
+
+<div class="gal" aria-hidden="true">
+  <div style="background-image:url('img/arroz.jpg')"></div>
+  <div style="background-image:url('img/majarete.jpg')"></div>
+  <div style="background-image:url('img/lechosa.jpg')"></div>
+  <div style="background-image:url('img/hallaca.jpg')"></div>
+</div>
+
+<footer>
+  <div class="wrap cols">
+    <div>
+      <span class="brand">La Gran Parada</span>
+      <p>El rinconcito de los dulces</p>
+    </div>
+    <div>
+      <h4>Pedidos</h4>
+      <p>Por WhatsApp<br>+57 333 254 1685</p>
+    </div>
+    <div>
+      <h4>Dónde estamos</h4>
+      <p>Maracaibo, Venezuela</p>
+    </div>
+  </div>
+</footer>
+
+<a class="float" id="flotante" href="#" target="_blank" rel="noopener">Escríbenos</a>
+
+<script>
+  // Número de WhatsApp con código de país y sin signos (57 = Colombia)
+  var NUMERO = "573332541685";
+  var TIENDA = "La Gran Parada";
+
+  var A = 'viewBox="0 0 100 100" fill="none" stroke="#ffd400" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" role="img"';
+  var SVG = {
+    cumple: '<svg ' + A + ' aria-label="Torta de cumpleaños"><rect x="14" y="62" width="72" height="24" rx="4"/><rect x="26" y="40" width="48" height="22" rx="4"/><path d="M14 70c6 8 12 8 18 0s12 8 18 0 12 8 18 0 12 8 18 0"/><path d="M40 40V28M50 40V24M60 40V28"/><path d="M40 22c-3 3-3 6 0 6s3-3 0-6zM50 18c-3 3-3 6 0 6s3-3 0-6zM60 22c-3 3-3 6 0 6s3-3 0-6z"/></svg>',
+    ninos: '<svg ' + A + ' aria-label="Torta para niños"><rect x="22" y="56" width="56" height="30" rx="5"/><path d="M22 66c5 6 9 6 14 0s9 6 14 0 9 6 14 0 9 6 14 0"/><path d="M50 30l4 8 9 1-7 6 2 9-8-5-8 5 2-9-7-6 9-1z"/><circle cx="20" cy="30" r="8"/><path d="M20 38c0 8 6 12 8 18"/><circle cx="82" cy="26" r="8"/><path d="M82 34c0 8-6 14-8 22"/></svg>'
+  };
+
+  var CATS = [
+    { cat: "todo", nombre: "Todo", foto: "img/hallaca.jpg" },
+    { cat: "Salados", nombre: "Salados", foto: "img/arroz.jpg" },
+    { cat: "Dulces", nombre: "Dulces", foto: "img/majarete.jpg" },
+    { cat: "Tortas", nombre: "Tortas", foto: "", svg: "cumple" }
+  ];
+
+  var PRODUCTOS = [
+    { nombre: "Hallacas venezolanas", cat: "Salados", destacado: true, tags: ["Destacado"], precio: "$3,50 c/u", fotos: ["img/hallaca-1.jpg", "img/hallaca-2.jpg"] },
+    { nombre: "Arroz con pollo", cat: "Salados", tags: [], precio: "$5 la porción", fotos: ["img/arroz-1.jpg", "img/arroz-2.jpg"] },
+    { nombre: "Pan de jamón", cat: "Salados", tags: ["Tradición decembrina"], precio: "$12", fotos: ["img/pan-1.jpg", "img/pan-2.jpg", "img/pan-3.jpg"] },
+    { nombre: "Majarete", cat: "Dulces", tags: [], precio: "$2,50", fotos: ["img/majarete.jpg"] },
+    { nombre: "Dulce de lechosa", cat: "Dulces", tags: ["Tradición decembrina"], precio: "$4", fotos: ["img/lechosa-1.jpg", "img/lechosa-2.jpg"] },
+    { nombre: "Brazo gitano de dulce de leche", cat: "Dulces", tags: [], precio: "$8", fotos: ["img/brazo-1.jpg", "img/brazo-2.jpg"] },
+    { nombre: "Ponche crema", cat: "Dulces", tags: ["Tradición decembrina", "Contiene licor"], precio: "$8 la botella", fotos: ["img/ponche-1.jpg", "img/ponche.jpg"] },
+    { nombre: "Chicha", cat: "Dulces", tags: [], precio: "$2,50 el vaso", fotos: ["img/chicha-1.jpg", "img/chicha-2.jpg"] },
+    { nombre: "Torta para hombre", cat: "Tortas", svg: "cumple", tags: ["Por encargo"], precio: "Desde $25", fotos: ["img/torta-hombre-1.jpg"] },
+    { nombre: "Torta para mujer", cat: "Tortas", svg: "cumple", tags: ["Por encargo"], precio: "Desde $25", fotos: ["img/torta-mujer-1.jpg", "img/torta-mujer-2.jpg"] },
+    { nombre: "Torta para niños", cat: "Tortas", svg: "ninos", tags: ["Por encargo"], precio: "Desde $30", fotos: ["img/torta-ninos-1.jpg"] }
+  ];
+
+  function enlace(texto) { return "https://wa.me/" + NUMERO + "?text=" + encodeURIComponent(texto); }
+  function el(tag, cls, txt) { var e = document.createElement(tag); if (cls) e.className = cls; if (txt) e.textContent = txt; return e; }
+
+  function tarjeta(p) {
+    var card = el("article", "card" + (p.destacado ? " feat" : ""));
+    card.setAttribute("data-cat", p.cat);
+    var art = el("div", "art");
+    if (p.fotos.length) {
+      var track = el("div", "track");
+      p.fotos.forEach(function (src, i) {
+        var img = el("img"); img.src = src; img.alt = p.nombre + " " + (i + 1); img.loading = "lazy";
+        track.appendChild(img);
+      });
+      art.appendChild(track);
+      if (p.fotos.length > 1) {
+        var dots = el("div", "dots");
+        p.fotos.forEach(function (_, i) { dots.appendChild(el("i", i === 0 ? "on" : "")); });
+        art.appendChild(dots);
+        track.addEventListener("scroll", function () {
+          var i = Math.round(track.scrollLeft / track.clientWidth);
+          dots.querySelectorAll("i").forEach(function (d, k) { d.className = k === i ? "on" : ""; });
+        });
+        var prev = el("button", "nav-btn prev", "\u2039"); prev.type = "button"; prev.setAttribute("aria-label", "Foto anterior");
+        var next = el("button", "nav-btn next", "\u203a"); next.type = "button"; next.setAttribute("aria-label", "Foto siguiente");
+        prev.addEventListener("click", function () { track.scrollBy({ left: -track.clientWidth, behavior: "smooth" }); });
+        next.addEventListener("click", function () { track.scrollBy({ left: track.clientWidth, behavior: "smooth" }); });
+        art.appendChild(prev); art.appendChild(next);
+      }
+    } else {
+      art.innerHTML = SVG[p.svg];
+      art.appendChild(el("span", "soon", "Foto próximamente"));
+    }
+    if (p.tags.length) {
+      var t = el("div", "tags");
+      p.tags.forEach(function (x) { t.appendChild(el("span", "tag", x)); });
+      art.appendChild(t);
+    }
+    card.appendChild(art);
+    var body = el("div", "body");
+    body.appendChild(el("h3", "", p.nombre));
+    body.appendChild(el("span", "price", p.precio));
+    var a = el("a", "btn", "Pedir por WhatsApp");
+    a.href = enlace("Hola, quiero pedir: " + p.nombre + " (" + TIENDA + ")");
+    a.target = "_blank"; a.rel = "noopener";
+    body.appendChild(a);
+    card.appendChild(body);
+    return card;
+  }
+
+  var B = 'viewBox="0 0 100 100" fill="none" stroke="#ffd400" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" role="img"';
+  SVG.torta = '<svg ' + B + ' aria-label="Torta"><rect x="14" y="58" width="72" height="26" rx="4"/><rect x="26" y="38" width="48" height="20" rx="4"/><path d="M14 66c6 8 12 8 18 0s12 8 18 0 12 8 18 0 12 8 18 0"/><path d="M50 38V24"/><path d="M50 14c-4 4-4 8 0 8s4-4 0-8z"/></svg>';
+  SVG.refresco = '<svg ' + B + ' aria-label="Refresco"><path d="M40 14h20v14c10 6 12 16 12 28v28a6 6 0 0 1-6 6H34a6 6 0 0 1-6-6V56c0-12 2-22 12-28z"/><path d="M28 50h44M28 70h44"/></svg>';
+  SVG.pernil = '<svg ' + B + ' aria-label="Pernil"><path d="M20 62c0-22 18-36 38-36 14 0 22 8 22 20 0 18-16 32-36 32-14 0-24-6-24-16z"/><path d="M80 46l12-8M82 56l12 2"/><circle cx="92" cy="36" r="4"/><circle cx="94" cy="60" r="4"/><path d="M40 52c6-6 16-8 24-4"/></svg>';
+  SVG.ensalada = '<svg ' + B + ' aria-label="Ensalada de gallina"><path d="M14 52h72c0 20-14 32-36 32S14 72 14 52z"/><path d="M26 52c2-14 12-22 24-22s22 8 24 22"/><path d="M38 44c4-6 10-6 14 0M52 40c4-4 10-4 14 2"/><path d="M40 90h20"/></svg>';
+  SVG.tequenos = '<svg ' + B + ' aria-label="Tequeños"><rect x="14" y="30" width="62" height="14" rx="7" transform="rotate(-18 45 37)"/><rect x="24" y="52" width="62" height="14" rx="7" transform="rotate(-6 55 59)"/><rect x="18" y="72" width="62" height="14" rx="7" transform="rotate(8 49 79)"/></svg>';
+
+  var ITEMS = [
+    { n: "Hallacas", d: "15 unidades", foto: "img/hallaca-1.jpg" },
+    { n: "Arroz con pollo", d: "1 kilo", foto: "img/arroz-1.jpg" },
+    { n: "Torta de fin de año", d: "1 torta", svg: "torta" },
+    { n: "Pan de jamón", d: "2 unidades", foto: "img/pan-1.jpg" },
+    { n: "Pernil", d: "Pierna de cerdo", svg: "pernil" },
+    { n: "Ensalada de gallina", d: "Para la mesa", svg: "ensalada" },
+    { n: "Tequeños", d: "Para picar", svg: "tequenos" },
+    { n: "Ponche crema", d: "1 botella", foto: "img/ponche-1.jpg" },
+    { n: "Dulce de lechosa", d: "Para el postre", foto: "img/lechosa-1.jpg" },
+    { n: "Majarete", d: "Para el postre", foto: "img/majarete.jpg" },
+    { n: "Coca-Cola", d: "2 unidades", svg: "refresco" }
+  ];
+  var itemsEl = document.getElementById("items");
+  ITEMS.forEach(function (it) {
+    var box = el("div", "item");
+    var th = el("div", "th");
+    if (it.foto) { th.style.backgroundImage = "url('" + it.foto + "')"; } else { th.innerHTML = SVG[it.svg]; }
+    box.appendChild(th);
+    var tx = el("div");
+    tx.appendChild(el("b", "", it.n));
+    tx.appendChild(el("span", "", it.d));
+    box.appendChild(tx);
+    itemsEl.appendChild(box);
+  });
+
+  var grid = document.getElementById("grid");
+  PRODUCTOS.forEach(function (p) { grid.appendChild(tarjeta(p)); });
+
+  var catsEl = document.getElementById("cats");
+  CATS.forEach(function (c, i) {
+    var b = el("button", "cat"); b.type = "button";
+    b.setAttribute("data-cat", c.cat);
+    b.setAttribute("aria-pressed", i === 0 ? "true" : "false");
+    var ph = el("div", "ph");
+    if (c.foto) { ph.style.backgroundImage = "url('" + c.foto + "')"; } else { ph.innerHTML = SVG[c.svg]; }
+    b.appendChild(ph);
+    b.appendChild(document.createTextNode(c.nombre));
+    b.addEventListener("click", function () {
+      catsEl.querySelectorAll(".cat").forEach(function (x) { x.setAttribute("aria-pressed", x === b ? "true" : "false"); });
+      grid.querySelectorAll(".card").forEach(function (card) {
+        card.hidden = !(c.cat === "todo" || card.getAttribute("data-cat") === c.cat);
+      });
+      document.getElementById("menu").scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+    catsEl.appendChild(b);
+  });
+
+  var hoja = document.getElementById("paquete");
+  function abrir() { hoja.hidden = false; document.body.style.overflow = "hidden"; document.getElementById("packX").focus(); }
+  function cerrar() { hoja.hidden = true; document.body.style.overflow = ""; document.getElementById("heroPack").focus(); }
+  ["verPack", "heroPack"].forEach(function (id) { document.getElementById(id).addEventListener("click", abrir); });
+  ["packX", "packBack"].forEach(function (id) { document.getElementById(id).addEventListener("click", cerrar); });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !hoja.hidden) cerrar(); });
+
+  var general = enlace("Hola, quiero hacer un pedido en " + TIENDA);
+  document.getElementById("packPedir").href = enlace("Hola, quiero apartar mi cupo del Paquete Navideño de $100 (" + TIENDA + ")");
+  ["flotante", "navPedir", "promoPedir"].forEach(function (id) { document.getElementById(id).href = general; });
+  document.getElementById("heroPedir").href = enlace("Hola, quiero pedir: Hallacas venezolanas (" + TIENDA + ")");
+</script>
+</body>
+</html>
